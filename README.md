@@ -75,6 +75,10 @@ In this blog post, I’ll share my personal notes on setting up a kubernetes clu
 
 For this setup, I will use three (3) Virtual Machines in my local lab. My home lab is built on libvirt with QEMU/KVM (Kernel-based Virtual Machine), and I use Terraform as the infrastructure provisioning tool.
 
+## Architecture Diagram
+
+![k8s_architecture](attachments/k8s_architecture.svg)
+
 ## Prerequisites
 
 - at least 3 Virtual Machines of Ubuntu 24.04 (one for control-plane, two for worker nodes)
