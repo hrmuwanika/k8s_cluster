@@ -107,8 +107,8 @@ I prefer maintaining a reproducible infrastructure so that I can quickly create 
 You can `git clone` the repo to review and edit it according to your needs.
 
 ```bash
-git clone https://github.com/ebal/k8s_cluster.git
-cd tf_libvirt
+git clone https://github.com/hrmuwanika/k8s_cluster.git
+cd k8s_cluster/tf_libvirt
 
 ```
 
