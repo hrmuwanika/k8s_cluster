@@ -1,9 +1,37 @@
 #!/usr/bin/bash
 
+#--------------------------------------------------
+# Update and upgrade the system
+#--------------------------------------------------
+echo -e "=== Updating system packages ... ==="
+sudo apt update 
+sudo apt upgrade -y
+sudo apt autoremove -y
+
+#----------------------------------------------------
+# Disabing password authentication
+#----------------------------------------------------
+echo "=== Disabling password authentication ... ==="
+sudo apt -y install openssh-server
+sudo sed -i 's/#ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/' /etc/ssh/sshd_config
+sudo sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config 
+sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+sudo systemctl restart sshd
+
+#--------------------------------------------------
+# Setting up the timezones
+#--------------------------------------------------
+# set the correct timezone on ubuntu
+timedatectl set-timezone Africa/Kigali
+timedatectl
+
 # Open the necessary ports on the Worker's node firewall.
+sudo apt install -y ufw 
 sudo ufw allow 10250/tcp
 sudo ufw allow 10256/tcp
 sudo ufw allow 30000:32767/tcp
+sudo ufw reload
+sudo ufw enable-y
 
 # flannel
 sudo ufw allow 8472/udp
