@@ -100,7 +100,7 @@ Review the values and adjust them according to your requirements and limitations
 
 ## Git Terraform Code for the kubernetes cluster
 
-I prefer maintaining a reproducible infrastructure so that I can quickly create and destroy my test lab. My approach involves testing each step, so I often destroy everything, copy and paste commands, and move forward. I use Terraform to provision the infrastructure. You can find the full Terraform code for the Kubernetes cluster here: [k8s cluster - Terraform code](https://github.com/ebal/k8s_cluster/tree/main/tf_libvirt).
+I prefer maintaining a reproducible infrastructure so that I can quickly create and destroy my test lab. My approach involves testing each step, so I often destroy everything, copy and paste commands, and move forward. I use Terraform to provision the infrastructure. You can find the full Terraform code for the Kubernetes cluster here: [k8s cluster - Terraform code](https://github.com/hrmuwanika/k8s_cluster/tree/main/tf_libvirt).
 
 > If you do not use terraform, skip this step!
 
