@@ -63,6 +63,9 @@ EOF
 
 sudo sysctl --system
 
+# install necessary packages:
+sudo apt install -y git nano wget apt-transport-https ca-certificates curl gnupg2 software-properties-common
+
 # Setup CRI
 curl -sL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-keyring.gpg
 sudo chmod 0644 /etc/apt/trusted.gpg.d/docker-keyring.gpg
