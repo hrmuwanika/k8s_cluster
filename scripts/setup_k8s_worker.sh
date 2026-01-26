@@ -36,6 +36,9 @@ sudo ufw enable-y
 # flannel
 sudo ufw allow 8472/udp
 
+# install necessary packages:
+sudo apt install -y git nano wget apt-transport-https ca-certificates curl gnupg2 software-properties-common
+
 # Get status
 sudo ufw status
 
