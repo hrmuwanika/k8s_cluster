@@ -115,8 +115,10 @@ sudo chmod 0644 /etc/apt/sources.list.d/kubernetes.list
 
 sleep 1
 
-sudo apt-get update
-sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt update
+sudo apt install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
+sudo systemctl enable --now kubelet
 
 echo ""
 echo "Finished setup. Now join cluster with token and certificate hash from the control node !"
