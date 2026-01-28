@@ -3,10 +3,10 @@ locals {
     cloud_image = "../../../images/ubuntu/oracular-server-cloudimg-amd64.img"
 
     # Virtual Machines
-    VMs = toset(["k8scpnode1", "k8swrknode1", "k8swrknode2"])
+    VMs = toset(["k8s-master", "k8s-worker-1", "k8s-worker-2"])
 
     # TimeZone of the VM: /usr/share/zoneinfo/
-    timezone    = "Europe/Athens"
+    timezone    = "Africa/Kigali"
 
     # The sshd port of the VM"
     ssh_port    = 22
@@ -20,7 +20,7 @@ locals {
     vol_size = 40 * 1024 * 1024 * 1024
 
     # How many virtual CPUs the VM
-    vcpu = 4
+    vcpu = 2
 
     # How RAM will VM have will have
     vmem = 4096
