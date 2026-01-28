@@ -3,9 +3,8 @@
 #--------------------------------------------------
 # Update and upgrade the system
 #--------------------------------------------------
-echo -e "=== Updating system packages ... ==="
-sudo apt update 
-sudo apt upgrade -y
+echo "=== Updating system packages ... ==="
+sudo apt update && sudo apt upgrade -y
 sudo apt autoremove -y
 
 #----------------------------------------------------
@@ -37,6 +36,17 @@ sudo ufw enable-y
 
 # Get status
 sudo ufw status
+
+# Change hostname
+sudo hostnamectl set-hostname k8s-master
+
+# Change hosts
+sudo tee /etc/hosts <<EOF
+10.10.10.1 k8s-master
+10.10.10.2 k8s-worker1
+10.10.10.3 k8s-worker2
+10.10.10.4 k8s-worker3
+EOF
 
 # Disable Swap
 sudo swapoff -a
