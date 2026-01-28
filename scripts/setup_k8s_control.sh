@@ -37,6 +37,14 @@ sudo ufw enable-y
 # Get status
 sudo ufw status
 
+# check ip address assigned
+ip a
+
+sleep = 20
+
+# Assign static ip address
+sudo nano /etc/network/interfaces
+
 # Change hostname
 sudo hostnamectl set-hostname k8s-master
 
