@@ -34,7 +34,7 @@ sudo ufw reload
 sudo ufw enable-y
 
 # install necessary packages:
-sudo apt install -y git nano wget apt-transport-https ca-certificates curl gnupg2 software-properties-common
+sudo apt install -y git nano wget apt-transport-https ca-certificates curl gnupg2 software-properties-common iptables-persistent
 
 # Change hostname
 sudo hostnamectl set-hostname k8s-worker1
