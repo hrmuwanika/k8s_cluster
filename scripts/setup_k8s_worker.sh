@@ -36,6 +36,14 @@ sudo ufw enable-y
 # install necessary packages:
 sudo apt install -y git nano wget apt-transport-https ca-certificates curl gnupg2 software-properties-common iptables-persistent
 
+# check ip address assigned
+ip a
+
+sleep = 20
+
+# Assign static ip address
+sudo nano /etc/network/interfaces
+
 # Change hostname
 sudo hostnamectl set-hostname k8s-worker1
 
