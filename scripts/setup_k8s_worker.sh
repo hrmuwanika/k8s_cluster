@@ -7,15 +7,16 @@ echo -e "=== Updating system packages ... ==="
 sudo apt update && sudo apt upgrade -y
 sudo apt autoremove -y
 
+# install necessary packages:
+sudo apt install -y git nano wget apt-transport-https ca-certificates curl gnupg2 software-properties-common iptables-persistent lsb-release
+
 #----------------------------------------------------
-# Disabing password authentication
+# Install Openssh server
 #----------------------------------------------------
 echo "=== Disabling password authentication ... ==="
 sudo apt -y install openssh-server
-sudo sed -i 's/#ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/' /etc/ssh/sshd_config
-sudo sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config 
-sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
-sudo systemctl restart sshd
+sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+sudo systemctl restart ssh
 
 #--------------------------------------------------
 # Setting up the timezones
@@ -32,9 +33,6 @@ sudo ufw allow 30000:32767/tcp
 sudo ufw allow 8472/udp             # Flannel
 sudo ufw reload
 sudo ufw enable-y
-
-# install necessary packages:
-sudo apt install -y git nano wget apt-transport-https ca-certificates curl gnupg2 software-properties-common iptables-persistent
 
 # check ip address assigned
 ip a
