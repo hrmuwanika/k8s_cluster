@@ -7,15 +7,16 @@ echo "=== Updating system packages ... ==="
 sudo apt update && sudo apt upgrade -y
 sudo apt autoremove -y
 
+# install necessary packages:
+sudo apt install -y git nano wget apt-transport-https ca-certificates curl gnupg2 software-properties-common iptables-persistent lsb-release
+
 #----------------------------------------------------
-# Disabing password authentication
+# Install Openssh server
 #----------------------------------------------------
 echo "=== Disabling password authentication ... ==="
 sudo apt -y install openssh-server
-sudo sed -i 's/#ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/' /etc/ssh/sshd_config
-sudo sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config 
-sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
-sudo systemctl restart sshd
+sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+sudo systemctl restart ssh
 
 #--------------------------------------------------
 # Setting up the timezones
@@ -27,8 +28,9 @@ timedatectl
 # Open the necessary ports on the CP's (control-plane node) firewall.
 sudo apt install -y ufw 
 sudo ufw allow 6443/tcp
+sudo ufw allow 10250:10252/tcp 
+sudo ufw allow 8472/udp
 sudo ufw allow 2379:2380/tcp
-sudo ufw allow 10250/tcp
 sudo ufw allow 10259/tcp
 sudo ufw allow 10257/tcp
 sudo ufw reload
@@ -80,9 +82,6 @@ net.ipv4.ip_forward = 1
 EOF
 
 sudo sysctl --system
-
-# install necessary packages:
-sudo apt install -y git nano wget apt-transport-https ca-certificates curl gnupg2 software-properties-common iptables-persistent
 
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
