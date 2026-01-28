@@ -4,8 +4,7 @@
 # Update and upgrade the system
 #--------------------------------------------------
 echo -e "=== Updating system packages ... ==="
-sudo apt update 
-sudo apt upgrade -y
+sudo apt update && sudo apt upgrade -y
 sudo apt autoremove -y
 
 #----------------------------------------------------
@@ -30,17 +29,23 @@ sudo apt install -y ufw
 sudo ufw allow 10250/tcp
 sudo ufw allow 10256/tcp
 sudo ufw allow 30000:32767/tcp
+sudo ufw allow 8472/udp             # Flannel
 sudo ufw reload
 sudo ufw enable-y
-
-# flannel
-sudo ufw allow 8472/udp
 
 # install necessary packages:
 sudo apt install -y git nano wget apt-transport-https ca-certificates curl gnupg2 software-properties-common
 
-# Get status
-sudo ufw status
+# Change hostname
+sudo hostnamectl set-hostname k8s-worker1
+
+# Change hosts
+sudo tee /etc/hosts <<EOF
+10.10.10.1 k8s-master
+10.10.10.2 k8s-worker1
+10.10.10.3 k8s-worker2
+10.10.10.4 k8s-worker3
+EOF
 
 # Disable Swap
 sudo swapoff -a
