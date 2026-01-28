@@ -40,7 +40,7 @@ sudo ufw status
 # check ip address assigned
 ip a
 
-sleep = 20
+sleep 10
 
 # Assign static ip address
 sudo nano /etc/network/interfaces
