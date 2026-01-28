@@ -129,7 +129,7 @@ sudo systemctl enable --now kubelet
 sudo kubeadm config images pull
 
 # Init kubernetes
-sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+sudo kubeadm init --pod-network-cidr=10.10.10.0/16
 
 # Setup kubeconfig
 KUBEDIR="$HOME/.kube"
