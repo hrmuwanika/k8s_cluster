@@ -72,21 +72,24 @@ EOF
 
 sudo sysctl --system
 
-# Setup CRI
-curl -sL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-keyring.gpg
-sudo chmod 0644 /etc/apt/trusted.gpg.d/docker-keyring.gpg
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
 
-sudo apt-add-repository -y "deb https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+ # Add the repository to Apt sources:
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+$(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-sleep 1
+# Update the system:
+sudo apt update
 
-sudo apt-get -y install containerd.io
+# Install Docker Community Edition:
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-containerd config default                              \
- | sed 's/SystemdCgroup = false/SystemdCgroup = true/' \
- | sudo tee /etc/containerd/config.toml
-
-sudo systemctl restart containerd.service
+# Start and enable Docker service
+sudo systemctl start docker
+sudo systemctl enable docker
 
 # Install kubeadm
 VERSION=$(curl -s https://api.github.com/repos/kubernetes/kubernetes/releases/latest | jq -r '.tag_name')
