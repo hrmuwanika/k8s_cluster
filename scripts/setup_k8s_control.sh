@@ -150,7 +150,7 @@ sudo systemctl enable --now kubelet
 sudo systemctl start kubelet
 
 # Init kubernetes
-sudo kubeadm init --pod-network-cidr=10.244.0.0/16 \
+sudo kubeadm init --pod-network-cidr=10.116.250.0/24 \
   --cri-socket=unix:///var/run/containerd/containerd.sock
 
 mkdir -p $HOME/.kube
