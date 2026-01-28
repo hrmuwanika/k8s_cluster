@@ -55,10 +55,10 @@ EOF
 
 # Disable Swap
 sudo swapoff -a
-sudo sed -i 's/^swap/#swap/' /etc/fstab
+sudo sed -i '/swap/s/^\(.*\)$/#\1/g' /etc/fstab
 
 # Always load on boot the k8s modules needed.
-sudo tee /etc/modules-load.d/kubernetes.conf <<EOF
+sudo tee /etc/modules-load.d/k8s.conf <<EOF
 overlay
 br_netfilter
 EOF
@@ -94,9 +94,40 @@ sudo apt update
 # Install Docker Community Edition:
 sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-# Start and enable Docker service
-sudo systemctl start docker
+# Configure Docker as CRI
+# Create containerd configuration directory
+sudo mkdir -p /etc/containerd
+
+# Generate default config and enable SystemdCgroup
+containerd config default | sudo tee /etc/containerd/config.toml
+sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+
+# Restart containerd
+sudo systemctl restart containerd
+sudo systemctl enable containerd
+
+# Configure Docker Daemon
+# Create Docker daemon config directory
+sudo mkdir -p /etc/docker
+
+# Create daemon.json with appropriate settings
+sudo tee /etc/docker/daemon.json <<EOF
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2",
+  "registry-mirrors": []
+}
+EOF
+
+# Restart Docker
+sudo systemctl daemon-reload
+sudo systemctl restart docker
 sudo systemctl enable --now docker
+
 
 # Install kubeadm
 VERSION=$(curl -s https://api.github.com/repos/kubernetes/kubernetes/releases/latest | jq -r '.tag_name')
@@ -117,8 +148,12 @@ sleep 1
 
 sudo apt update
 sudo apt install -y kubelet kubeadm kubectl
+
+# Hold versions to prevent auto-updates
 sudo apt-mark hold kubelet kubeadm kubectl
+
 sudo systemctl enable --now kubelet
+sudo systemctl start kubelet
 
 echo ""
 echo "Finished setup. Now join cluster with token and certificate hash from the control node !"
