@@ -39,7 +39,7 @@ sudo apt install -y git nano wget apt-transport-https ca-certificates curl gnupg
 # check ip address assigned
 ip a
 
-sleep = 20
+sleep 10
 
 # Assign static ip address
 sudo nano /etc/network/interfaces
