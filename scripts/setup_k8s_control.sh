@@ -39,23 +39,15 @@ sudo ufw enable-y
 # Get status
 sudo ufw status
 
-# check ip address assigned
-ip a
-
-sleep 10
-
-# Assign static ip address
-sudo nano /etc/network/interfaces
-
 # Change hostname
 sudo hostnamectl set-hostname k8s-master
 
 # Change hosts
 sudo tee /etc/hosts <<EOF
-10.10.10.1 k8s-master
-10.10.10.2 k8s-worker1
-10.10.10.3 k8s-worker2
-10.10.10.4 k8s-worker3
+10.116.250.1 k8s-master
+10.116.250.2 k8s-worker-1
+10.116.250.3 k8s-worker-2
+10.116.250.4 k8s-worker-3
 EOF
 
 # Disable Swap
