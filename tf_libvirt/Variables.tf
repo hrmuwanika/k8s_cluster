@@ -3,7 +3,7 @@ locals {
     cloud_image = "../../../images/ubuntu/oracular-server-cloudimg-amd64.img"
 
     # Virtual Machines
-    VMs = toset(["k8s-master", "k8s-worker-1", "k8s-worker-2"])
+    VMs = toset(["k3s-master-1", "k3s-worker-1", "k3s-worker-2"])
 
     # TimeZone of the VM: /usr/share/zoneinfo/
     timezone    = "Africa/Kigali"
@@ -13,7 +13,7 @@ locals {
 
     # The default ssh key for user ubuntu
     # https://github.com/<username>.keys
-    gh_user = "ebal"
+    gh_user = "d-code"
 
     # The disk volume size of the VM
     # eg. 40G
