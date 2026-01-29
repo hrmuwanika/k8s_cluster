@@ -35,7 +35,7 @@ sudo ufw reload
 sudo ufw enable-y
 
 # Change hostname
-sudo hostnamectl set-hostname k8s-worker-1
+sudo hostnamectl set-hostname k3s-worker-1
 
 # Change hosts
 sudo tee /etc/hosts <<EOF
