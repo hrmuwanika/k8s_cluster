@@ -39,10 +39,10 @@ sudo hostnamectl set-hostname k8s-worker-1
 
 # Change hosts
 sudo tee /etc/hosts <<EOF
-10.116.250.1 k8s-master
-10.116.250.2 k8s-worker-1
-10.116.250.3 k8s-worker-2
-10.116.250.4 k8s-worker-3
+10.116.250.1 k3s-master-1
+10.116.250.2 k3s-worker-1
+10.116.250.3 k3s-worker-2
+10.116.250.4 k3s-worker-3
 EOF
 
 # Disable Swap
